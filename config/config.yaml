@@ -1,0 +1,43 @@
+# All coordinates are in PIXELS of the video frame (x, y).
+detection:
+  model_path: models/yolov8n.pt      # auto-downloaded by Ultralytics if missing
+  tracker: bytetrack.yaml            # or botsort.yaml
+  detection_confidence: 0.35         # raw YOLO threshold
+  vehicle_classes: [car, motorcycle, bus, truck, bicycle]
+  device: auto                       # auto | cpu | cuda:0
+  process_fps: 0                     # 0 = every frame; else target FPS (frame skipping)
+  imgsz: 640
+
+violations:
+  violation_confidence_threshold: 0.70   # alert only if violation confidence >= this
+  cooldown_seconds: 30                   # same vehicle + same violation not repeated within this
+
+traffic_rules:
+  red_light:
+    enabled: true
+    direction: any                   # any | pos_to_neg | neg_to_pos (relative to stop line A->B)
+    signal_mode: hsv                 # hsv (read colour in signal_roi) | fixed
+    fixed_state: RED                 # used when signal_mode = fixed
+  wrong_way:
+    enabled: true
+    allowed_direction: [1, 0]        # unit-ish vector; [1,0] = left -> right
+    angle_tolerance_deg: 100         # movement beyond this angle from allowed = wrong way
+    min_displacement_px: 60
+    window_seconds: 2.0
+    zone: []                         # optional polygon; empty = whole frame
+  unsafe_stopping:
+    enabled: true
+    threshold_seconds: 10
+    max_movement_px: 8
+    zone: [[100, 300], [500, 300], [500, 450], [100, 450]]
+  speeding:                          # FUTURE EXTENSION - not implemented
+    enabled: false
+    speed_limit: 50
+
+cameras:
+  CAM_01:
+    name: Main Junction
+    latitude: 19.0760
+    longitude: 72.8777
+    stop_line: [[100, 400], [540, 400]]
+    signal_roi: [560, 20, 600, 100]  # x1, y1, x2, y2 around the traffic light

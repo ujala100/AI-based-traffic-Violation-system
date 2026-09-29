@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+node_modules/
+.env
+traffic.db
+models/*.pt
+videos/input/*
+videos/output/*
+violations/snapshots/*
+reports/*.csv
+.pytest_cache/
