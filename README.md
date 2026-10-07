@@ -80,7 +80,7 @@ The system is designed to provide:
 **1. Clone the repository**
 
 ```bash
-git clone <YOUR_REPOSITORY_URL>
+git clone <https://github.com/ujala100/AI-based-traffic-Violation-system>
 cd <YOUR_PROJECT_FOLDER>
 ```
 
